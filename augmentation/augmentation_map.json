@@ -1,0 +1,34 @@
+{
+    "none": {
+        "module": "augmentation.none",
+        "class": "NoAugmentation"
+    },
+    "string_suffix": {
+        "module": "augmentation.string_insertion",
+        "class": "RandomSuffix"
+    },
+    "string_prefix": {
+        "module": "augmentation.string_insertion",
+        "class": "RandomPrefix"
+    },
+    "string_anywhere": {
+        "module": "augmentation.string_insertion",
+        "class": "RandomAnywhere"
+    },
+    "character_edit": {
+        "module": "augmentation.character",
+        "class": "RandomEdit"
+    },
+    "character_insertion": {
+        "module": "augmentation.character",
+        "class": "RandomInsertion"
+    },
+    "character_deletion": {
+        "module": "augmentation.character",
+        "class": "RandomDeletion"
+    },
+    "deepinception": {
+        "module": "augmentation.deepinception",
+        "class": "DeepInception"
+    }
+}

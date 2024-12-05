@@ -1,0 +1,362 @@
+# This file contains the configurations of models to be evaluated. The name of
+# each first level table is an alias for the model that can be used in the
+# experiments configuration `models` key. Each first level table contains the 
+# configuration for that model.
+# 
+# The following keys are required for each model configuration:
+# - model_name_or_path: The  model name or path.
+# - api: The API to use for this model. Currently, the only supported APIs are
+#       "huggingface", "vllm" and "openai".
+# 
+# The following keys are optional for each model configuration:
+# - base_config: The name of the base configuration to use for this model. If
+#       this key is present, the model will use the same configuration as the
+#       base model, except for the keys that are explicitly set in this
+#       configuration.
+# - gpus: The number of GPUs to use for this model.
+# - model_kwargs: A table containing additional keyword arguments to pass to the
+#       model constructor.
+# - tokenizer_kwargs: A table containing additional keyword arguments to pass to
+#       the tokenizer constructor.
+# - api_key_location: The environment variable that contains the API key, if
+#       required.
+
+[gpt_4o]
+model_name_or_path = "gpt-4o"
+api = "openai"
+api_key_location = "OPENAI_API_KEY"
+
+[llama_2_7b_chat]
+model_name_or_path = "meta-llama/Llama-2-7b-chat-hf"
+api = "vllm"
+gpus = 1
+    [llama_2_7b_chat.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[llama_2_7b_chat_w8a8]
+model_name_or_path = "./quantized_models/Llama-2-7b-chat-hf-W8A8"
+api = "vllm"
+gpus = 1
+    [llama_2_7b_chat_w8a8.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[llama_2_7b_chat_w4a16]
+model_name_or_path = "./quantized_models/Llama-2-7b-chat-hf-W4A16"
+api = "vllm"
+gpus = 1
+    [llama_2_7b_chat_w4a16.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[llama_2_13b_chat]
+model_name_or_path = "meta-llama/Llama-2-13b-chat-hf"
+api = "vllm"
+gpus = 1
+
+[llama_3_8b_instruct]
+model_name_or_path = "meta-llama/Meta-Llama-3-8B-Instruct"
+api = "vllm"
+gpus = 1
+    [llama_3_8b_instruct.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[llama_3_8b_instruct_w8a8]
+model_name_or_path = "./quantized_models/Meta-Llama-3-8B-Instruct-W8A8"
+api = "vllm"
+gpus = 1
+    [llama_3_8b_instruct_w8a8.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[llama_3_8b_instruct_w4a16]
+model_name_or_path = "./quantized_models/Meta-Llama-3-8B-Instruct-W4A16"
+api = "vllm"
+gpus = 1
+    [llama_3_8b_instruct_w4a16.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[llama_3_8b_instruct_rr]
+model_name_or_path = "GraySwanAI/Llama-3-8B-Instruct-RR"
+api = "vllm"
+gpus = 1
+    [llama_3_8b_instruct_rr.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[llama_3_1_8b_instruct]
+model_name_or_path = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+api = "vllm"
+gpus = 1
+    [llama_3_1_8b_instruct.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [llama_3_1_8b_instruct.tokenizer_kwargs]
+    chat_template = "{% set loop_messages = messages %}{% for message in loop_messages %}{% set content = '<|start_header_id|>' + message['role'] + '<|end_header_id|>\n\n'+ message['content'] | trim + '<|eot_id|>' %}{% if loop.index0 == 0 %}{% set content = bos_token + content %}{% endif %}{{ content }}{% endfor %}{% if add_generation_prompt %}{{ '<|start_header_id|>assistant<|end_header_id|>\n\n' }}{% endif %}"
+
+[llama_3_1_8b_instruct_w8a8]
+model_name_or_path = "./quantized_models/Meta-Llama-3_1-8B-Instruct-W8A8"
+api = "vllm"
+gpus = 1
+    [llama_3_1_8b_instruct_w8a8.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [llama_3_1_8b_instruct_w8a8.tokenizer_kwargs]
+    chat_template = "{% set loop_messages = messages %}{% for message in loop_messages %}{% set content = '<|start_header_id|>' + message['role'] + '<|end_header_id|>\n\n'+ message['content'] | trim + '<|eot_id|>' %}{% if loop.index0 == 0 %}{% set content = bos_token + content %}{% endif %}{{ content }}{% endfor %}{% if add_generation_prompt %}{{ '<|start_header_id|>assistant<|end_header_id|>\n\n' }}{% endif %}"
+
+[llama_3_1_8b_instruct_w4a16]
+model_name_or_path = "./quantized_models/Meta-Llama-3_1-8B-Instruct-W4A16"
+api = "vllm"
+gpus = 1
+    [llama_3_1_8b_instruct_w4a16.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [llama_3_1_8b_instruct_w4a16.tokenizer_kwargs]
+    chat_template = "{% set loop_messages = messages %}{% for message in loop_messages %}{% set content = '<|start_header_id|>' + message['role'] + '<|end_header_id|>\n\n'+ message['content'] | trim + '<|eot_id|>' %}{% if loop.index0 == 0 %}{% set content = bos_token + content %}{% endif %}{{ content }}{% endfor %}{% if add_generation_prompt %}{{ '<|start_header_id|>assistant<|end_header_id|>\n\n' }}{% endif %}"
+
+[mistral_7b_instruct_v0_2]
+model_name_or_path = "mistralai/Mistral-7B-Instruct-v0.2"
+api = "vllm"
+gpus = 1
+    [mistral_7b_instruct_v0_2.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[mistral_7b_instruct_v0_2_w8a8]
+model_name_or_path = "./quantized_models/Mistral-7B-Instruct-v0_2-W8A8"
+api = "vllm"
+gpus = 1
+    [mistral_7b_instruct_v0_2_w8a8.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[mistral_7b_instruct_v0_2_w4a16]
+model_name_or_path = "./quantized_models/Mistral-7B-Instruct-v0_2-W4A16"
+api = "vllm"
+gpus = 1
+    [mistral_7b_instruct_v0_2_w4a16.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[mistral_7b_instruct_v0_2_rr]
+model_name_or_path = "GraySwanAI/Mistral-7B-Instruct-RR"
+api = "vllm"
+gpus = 1
+
+[mistral_7b_instruct_v0_3]
+model_name_or_path = "mistralai/Mistral-7B-Instruct-v0.3"
+api = "vllm"
+gpus = 1
+    [mistral_7b_instruct_v0_3.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[phi_3_mini_4k_instruct]
+model_name_or_path = "microsoft/Phi-3-mini-4k-instruct"
+api = "vllm"
+gpus = 1
+    [phi_3_mini_4k_instruct.model_kwargs]
+    trust_remote_code = true
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [phi_3_mini_4k_instruct.tokenizer_kwargs]
+    trust_remote_code = true
+
+[phi_3_small_8k_instruct]
+model_name_or_path = "microsoft/Phi-3-small-8k-instruct"
+api = "vllm"
+gpus = 1
+    [phi_3_small_8k_instruct.model_kwargs]
+    trust_remote_code = true
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [phi_3_small_8k_instruct.tokenizer_kwargs]
+    trust_remote_code = true
+
+[phi_3_small_8k_instruct_w8a8]
+model_name_or_path = "./quantized_models/Phi-3-small-8k-instruct-W8A8"
+api = "vllm"
+gpus = 1
+    [phi_3_small_8k_instruct_w8a8.model_kwargs]
+    trust_remote_code = true
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [phi_3_small_8k_instruct_w8a8.tokenizer_kwargs]
+    trust_remote_code = true
+
+[phi_3_small_8k_instruct_w4a16]
+model_name_or_path = "./quantized_models/Phi-3-small-8k-instruct-W4A16"
+api = "vllm"
+gpus = 1
+    [phi_3_small_8k_instruct_w4a16.model_kwargs]
+    trust_remote_code = true
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [phi_3_small_8k_instruct_w4a16.tokenizer_kwargs]
+    trust_remote_code = true
+
+[phi_3_medium_4k_instruct]
+model_name_or_path = "microsoft/Phi-3-medium-4k-instruct"
+api = "vllm"
+gpus = 1
+    [phi_3_medium_4k_instruct.model_kwargs]
+    trust_remote_code = true
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [phi_3_medium_4k_instruct.tokenizer_kwargs]
+    trust_remote_code = true
+
+[qwen_2_0_5b_instruct]
+model_name_or_path = "Qwen/Qwen2-0.5B-Instruct"
+api = "vllm"
+gpus = 1
+    [qwen_2_0_5b_instruct.tokenizer_kwargs]
+    chat_template = "{% for message in messages %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}"
+
+[qwen_2_1_5b_instruct]
+model_name_or_path = "Qwen/Qwen2-1.5B-Instruct"
+api = "vllm"
+gpus = 1
+    [qwen_2_1_5b_instruct.tokenizer_kwargs]
+    chat_template = "{% for message in messages %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}"
+
+[qwen_2_7b_instruct]
+model_name_or_path = "Qwen/Qwen2-7B-Instruct"
+api = "vllm"
+gpus = 1
+    [qwen_2_7b_instruct.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [qwen_2_7b_instruct.tokenizer_kwargs]
+    chat_template = "{% for message in messages %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}"
+
+[qwen_2_7b_instruct_w8a8]
+model_name_or_path = "./quantized_models/Qwen2-7B-Instruct-W8A8"
+api = "vllm"
+gpus = 1
+    [qwen_2_7b_instruct_w8a8.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [qwen_2_7b_instruct_w8a8.tokenizer_kwargs]
+    chat_template = "{% for message in messages %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}"
+
+[qwen_2_7b_instruct_w4a16]
+model_name_or_path = "./quantized_models/Qwen2-7B-Instruct-W4A16"
+api = "vllm"
+gpus = 1
+    [qwen_2_7b_instruct_w4a16.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [qwen_2_7b_instruct_w4a16.tokenizer_kwargs]
+    chat_template = "{% for message in messages %}{{'<|im_start|>' + message['role'] + '\n' + message['content'] + '<|im_end|>' + '\n'}}{% endfor %}{% if add_generation_prompt %}{{ '<|im_start|>assistant\n' }}{% endif %}"
+
+[vicuna_7b_v1_5]
+model_name_or_path = "lmsys/vicuna-7b-v1.5"
+api = "vllm"
+gpus = 1
+    [vicuna_7b_v1_5.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [vicuna_7b_v1_5.tokenizer_kwargs]
+    chat_template = "{% if messages[0]['role'] == 'system' %}{% set loop_messages = messages[1:] %}{% set system_message = messages[0]['content'] %}{% else %}{% set loop_messages = messages %}{% set system_message = false %}{% endif %}{{ bos_token + ' ' }}{% if system_message %}{{ system_message.strip() + ' ' }}{% endif %}{% for message in loop_messages %}{% set content = message['content'] %}{% if (message['role'] == 'user') != (loop.index0 % 2 == 0) %}{{ raise_exception('Conversation roles must alternate user/assistant/user/assistant/...') }}{% endif %}{% if message['role'] == 'user' %}{{ 'USER: ' + content.strip() + ' ASSISTANT:' }}{% elif message['role'] == 'assistant' %}{{ ' '  + content.strip() + ' ' + eos_token }}{% endif %}{% endfor %}"
+
+[vicuna_7b_v1_5_w8a8]
+model_name_or_path = "./quantized_models/vicuna-7b-v1_5-W8A8"
+api = "vllm"
+gpus = 1
+    [vicuna_7b_v1_5_w8a8.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [vicuna_7b_v1_5_w8a8.tokenizer_kwargs]
+    chat_template = "{% if messages[0]['role'] == 'system' %}{% set loop_messages = messages[1:] %}{% set system_message = messages[0]['content'] %}{% else %}{% set loop_messages = messages %}{% set system_message = false %}{% endif %}{{ bos_token + ' ' }}{% if system_message %}{{ system_message.strip() + ' ' }}{% endif %}{% for message in loop_messages %}{% set content = message['content'] %}{% if (message['role'] == 'user') != (loop.index0 % 2 == 0) %}{{ raise_exception('Conversation roles must alternate user/assistant/user/assistant/...') }}{% endif %}{% if message['role'] == 'user' %}{{ 'USER: ' + content.strip() + ' ASSISTANT:' }}{% elif message['role'] == 'assistant' %}{{ ' '  + content.strip() + ' ' + eos_token }}{% endif %}{% endfor %}"
+
+[vicuna_7b_v1_5_w4a16]
+model_name_or_path = "./quantized_models/vicuna-7b-v1_5-W4A16"
+api = "vllm"
+gpus = 1
+    [vicuna_7b_v1_5_w4a16.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+    [vicuna_7b_v1_5_w4a16.tokenizer_kwargs]
+    chat_template = "{% if messages[0]['role'] == 'system' %}{% set loop_messages = messages[1:] %}{% set system_message = messages[0]['content'] %}{% else %}{% set loop_messages = messages %}{% set system_message = false %}{% endif %}{{ bos_token + ' ' }}{% if system_message %}{{ system_message.strip() + ' ' }}{% endif %}{% for message in loop_messages %}{% set content = message['content'] %}{% if (message['role'] == 'user') != (loop.index0 % 2 == 0) %}{{ raise_exception('Conversation roles must alternate user/assistant/user/assistant/...') }}{% endif %}{% if message['role'] == 'user' %}{{ 'USER: ' + content.strip() + ' ASSISTANT:' }}{% elif message['role'] == 'assistant' %}{{ ' '  + content.strip() + ' ' + eos_token }}{% endif %}{% endfor %}"
+
+[vicuna_13b_v1_5]
+model_name_or_path = "lmsys/vicuna-13b-v1.5"
+api = "vllm"
+gpus = 1
+    [vicuna_13b_v1_5.tokenizer_kwargs]
+    chat_template = "{% if messages[0]['role'] == 'system' %}{% set loop_messages = messages[1:] %}{% set system_message = messages[0]['content'] %}{% else %}{% set loop_messages = messages %}{% set system_message = false %}{% endif %}{{ bos_token + ' ' }}{% if system_message %}{{ system_message.strip() + ' ' }}{% endif %}{% for message in loop_messages %}{% set content = message['content'] %}{% if (message['role'] == 'user') != (loop.index0 % 2 == 0) %}{{ raise_exception('Conversation roles must alternate user/assistant/user/assistant/...') }}{% endif %}{% if message['role'] == 'user' %}{{ 'USER: ' + content.strip() + ' ASSISTANT:' }}{% elif message['role'] == 'assistant' %}{{ ' '  + content.strip() + ' ' + eos_token }}{% endif %}{% endfor %}"
+
+[zephyr_7b_beta]
+model_name_or_path = "HuggingFaceH4/zephyr-7b-beta"
+api = "vllm"
+gpus = 1
+    [zephyr_7b_beta.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[zephyr_7b_beta_w8a8]
+model_name_or_path = "./quantized_models/zephyr-7b-beta-W8A8"
+api = "vllm"
+gpus = 1
+    [zephyr_7b_beta_w8a8.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[zephyr_7b_beta_w4a16]
+model_name_or_path = "./quantized_models/zephyr-7b-beta-W4A16"
+api = "vllm"
+gpus = 1
+    [zephyr_7b_beta_w4a16.model_kwargs]
+    gpu_memory_utilization = 0.85
+    max_num_seqs = 160
+    swap_space = 16
+
+[zephyr_7b_beta_r2d2]
+model_name_or_path = "cais/zephyr_7b_r2d2"
+api = "vllm"
+gpus = 1

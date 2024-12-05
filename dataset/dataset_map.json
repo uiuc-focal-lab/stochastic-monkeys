@@ -1,0 +1,10 @@
+{
+    "sorry_bench": {
+        "module": "dataset.sorry_bench",
+        "class": "SorryBench"
+    },
+    "mt_bench_first_turn": {
+        "module": "dataset.mt_bench_first_turn",
+        "class": "MTBenchFirstTurn"
+    }
+}
